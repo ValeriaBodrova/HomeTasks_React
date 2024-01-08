@@ -1,14 +1,16 @@
 import React from 'react';
 import ListItem from './ListItem';
+import { connect } from 'react-redux';
+import { toggleTodo } from './actions';
 
-const List = ({ todos, onToggle, onDelete }) => {
+const List = ({ todos, toggleTodo, onDelete }) => {
   return (
     <ul>
       {todos.map((todo, index) => (
         <ListItem
           key={index}
           todo={todo}
-          onToggle={() => onToggle(index)}
+          onToggle={() => toggleTodo(index)}
           onDelete={() => onDelete(index)}
         />
       ))}
@@ -16,4 +18,8 @@ const List = ({ todos, onToggle, onDelete }) => {
   );
 };
 
-export default List;
+const mapStateToProps = state => ({
+  todos: state.todos
+});
+
+export default connect(mapStateToProps, { toggleTodo })(List);

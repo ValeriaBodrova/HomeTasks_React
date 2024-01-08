@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from './actions';
 
-const Form = ({ onAddTodo }) => {
+const Form = ({ addTodo }) => {
   const [newTodo, setNewTodo] = useState('');
 
   const handleAddTodo = () => {
     if (newTodo.trim() !== '') {
-      onAddTodo(newTodo);
+      addTodo(newTodo);
       setNewTodo('');
     }
   };
@@ -23,4 +25,4 @@ const Form = ({ onAddTodo }) => {
   );
 };
 
-export default Form;
+export default connect(null, { addTodo })(Form);

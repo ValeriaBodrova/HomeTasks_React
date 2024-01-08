@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
 import List from './List';
 import Form from './Form';
 
@@ -22,12 +24,16 @@ const App = () => {
   };
 
   return (
+    <Provider store={store}>
     <div>
       <h1>Todo List</h1>
       <List todos={todos} onToggle={handleToggle} onDelete={handleDelete} />
       <Form onAddTodo={handleAddTodo} />
     </div>
+    </Provider>
   );
 };
 
 export default App;
+
+
