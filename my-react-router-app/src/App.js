@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UsersList from './UsersList';
 import AlbumsList from './AlbumsList';
 import PhotosList from './PhotosList';
@@ -8,11 +8,11 @@ function App() {
   return (
     <Router>
       <div>
-        <Switch>
-          <Route path="/" exact component={UsersList} />
-          <Route path="/albums/:userId" component={AlbumsList} />
-          <Route path="/photos/:albumId" component={PhotosList} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<UsersList />} />
+          <Route path="/albums/:userId" element={<AlbumsList />} />
+          <Route path="/photos/:albumId" element={<PhotosList />} />
+        </Routes>
       </div>
     </Router>
   );
