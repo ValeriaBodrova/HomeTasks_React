@@ -3,7 +3,12 @@ export const addTodo = (text) => ({
     payload: { text }
   });
   
-  export const toggleTodo = (id) => ({
+  export const toggleTodo = (index) => ({
     type: 'TOGGLE_TODO',
-    payload: { id }
+    payload: { index }
   });
+
+  export const deleteTodo = (index) => ({
+    type: 'DELETE_TODO',
+    payload: { index },
+  })
