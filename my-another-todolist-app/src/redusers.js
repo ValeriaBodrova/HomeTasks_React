@@ -1,4 +1,4 @@
-const todoReducer = (state = [], action) => {
+const redusers = (state = [], action) => {
     switch (action.type) {
       case 'ADD_TODO':
         return [
@@ -22,4 +22,4 @@ const todoReducer = (state = [], action) => {
     }
   };
   
-  export default todoReducer;
+  export default redusers;
