@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { addTodo } from './actions';
+import { useDispatch } from 'react-redux';
 
-const Form = ({ addTodo }) => {
-  const [newTodo, setNewTodo] = useState('');
-
-  const handleAddTodo = () => {
-    if (newTodo.trim() !== '') {
-      addTodo(newTodo);
-      setNewTodo('');
-    }
+const Form = () => {
+  const dispatch = useDispatch();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const todoText = e.target.elements.todoInput.value;
+    dispatch(
+      addTodo({
+        id: crypto.randomUUID(),
+        text: todoText,
+        isDone: false,
+      })
+    );
+    e.target.reset();
   };
-
   return (
-    <div>
-      <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="Enter a new todo..."
-      />
-      <button onClick={handleAddTodo}>Add Todo</button>
-    </div>
+    <form onSubmit={submitHandler}>
+      <input placeholder="Name of todo" autoComplete="off" name="todoInput" />
+      <button type="submit">Add Todo</button>
+    </form>
   );
 };
 
-export default connect(null, { addTodo })(Form);
+export default Form;

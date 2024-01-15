@@ -1,39 +1,22 @@
-import { createStore, combineReducers} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { ADD_TODO_TYPE, DELETE_TODO_TYPE, TOGGLE_TODO_TYPE } from './actions';
+import { initialTodos } from './state';
 
-
-
-const redusers = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        {
-          id: state.length + 1,
-          text: action.payload.text,
-          completed: false
-        }
-      ];
-
-      case 'TOGGLE_TODO':
-  return state.map((todo, index) =>
-    index === action.payload.index
-      ? { ...todo, completed: !todo.completed }
-      : todo
-  );
-
-  case 'DELETE_TODO':
-    return state.filter((_, indexTodo) => indexTodo !== action.payload.index);
-  
-
+const reducers = (state = initialTodos, { type, payload }) => {
+  switch (type) {
+    case ADD_TODO_TYPE:
+      return state.concat(payload);
+    case TOGGLE_TODO_TYPE:
+      return state.map((todo) =>
+        todo.id === payload ? { ...todo, isDone: !todo.isDone } : todo
+      );
+    case DELETE_TODO_TYPE:
+      return state.filter((todo) => todo.id !== payload);
     default:
       return state;
   }
 };
 
-const rootReducer = combineReducers({
-  todos: redusers
-});
-
-const store = createStore(rootReducer);
+const store = createStore(reducers, applyMiddleware());
 
 export default store;

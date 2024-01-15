@@ -1,25 +1,29 @@
 import React from 'react';
 import ListItem from './ListItem';
-import { connect } from 'react-redux';
-import { toggleTodo } from './actions';
+import { toggleTodo, deleteTodo } from './actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectTodos } from './selectors';
 
-const List = ({ todos, toggleTodo, onDelete }) => {
+ const List = () => {
+  const dispatch = useDispatch();
+  const list = useSelector(selectTodos);
+  const toggleHandler = (id) => {
+    dispatch(toggleTodo(id));
+  };
+  const deleteHandler = (id) => {
+    dispatch(deleteTodo(id));
+  };
   return (
     <ul>
-      {todos.map((todo, index) => (
+      {list.map((todo) => (
         <ListItem
-          key={index}
-          todo={todo}
-          onToggle={() => toggleTodo(index)}
-          onDelete={() => onDelete(index)}
+          key={todo.id}
+          item={todo}
+          onToggle={toggleHandler}
+          onDelete={deleteHandler}
         />
       ))}
     </ul>
   );
 };
-
-const mapStateToProps = state => ({
-  todos: state.todos
-});
-
-export default connect(mapStateToProps, { toggleTodo })(List);
+export default List;

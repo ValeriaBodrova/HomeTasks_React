@@ -1,12 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ListItem = ({ todo, onToggle, onDelete }) => {
+
+const ListItem = ({ item, onToggle, onDelete }) => {
   return (
-    <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-      <span onClick={onToggle}>{todo.text}</span>
-      <button onClick={onDelete}>Delete</button>
+    <li
+      className={`todo-item ${item.isDone ? 'done' : ''}`}
+      onClick={(e) => onToggle(item.id)}
+    >
+      <span>{item.text}</span>
+      <button onClick={(e) => onDelete(item.id)}>Delete</button>
     </li>
   );
 };
+
+ListItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  onToggle: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
 
 export default ListItem;
